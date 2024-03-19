@@ -71,15 +71,6 @@ a {
   font-family: DG-3asomy-Regular;
   src: url("../fonts/DG-3asomy-Regular.ttf");
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper, .game .body .body-wrapper .cards .cards-wrapper {
-  width: calc((100% - 3vh) * 0.5);
-}
-@media (min-width: 768px) {
-  .game .body .body-wrapper .match-cards .match-cards-wrapper, .game .body .body-wrapper .cards .cards-wrapper {
-    width: calc((100% - 1.5rem) * 0.5);
-  }
-}
-
 .success-wrapper, .popup, .game .cardContainer, .overlay, .pop-overlay {
   position: fixed;
   top: 50%;
@@ -102,7 +93,7 @@ a {
   left: 0;
 }
 
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
+.game .body .body-wrapper .match-cards .match-card-wrapper .match-card, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
   width: 100%;
   padding: 1.875vh;
   color: #000;
@@ -111,17 +102,17 @@ a {
   text-align: center;
   border-radius: 0.75rem;
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card::first-letter, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item::first-letter {
+.game .body .body-wrapper .match-cards .match-card-wrapper .match-card::first-letter, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item::first-letter {
   text-transform: capitalize;
 }
 @media (min-width: 768px) {
-  .game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
+  .game .body .body-wrapper .match-cards .match-card-wrapper .match-card, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
     padding: 0.5rem;
     font-size: 1rem;
   }
 }
 @media (min-width: 992px) {
-  .game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
+  .game .body .body-wrapper .match-cards .match-card-wrapper .match-card, .game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
     width: 90%;
     font-size: 1.5rem;
   }
@@ -222,7 +213,6 @@ a {
   position: relative;
   overflow-y: auto;
   visibility: hidden;
-  background-image: url("../media/images/background.svg");
   background-size: cover;
   background-position: 50% 100%;
 }
@@ -453,88 +443,76 @@ a {
   background-color: rgba(255, 255, 255, 0.75);
 }
 .game .body .body-wrapper {
-  gap: 4vh;
+  gap: 2vh;
+  overflow: hidden;
 }
 @media (min-width: 768px) {
   .game .body .body-wrapper {
-    gap: 2rem;
+    gap: 1rem;
   }
 }
 .game .body .body-wrapper .cards {
-  width: 50%;
-  max-height: calc((100% - 4vh) * 0.6);
-  gap: 3vh;
+  width: 100%;
+  min-height: calc((100% - 2vh) * 0.7);
+  gap: 2vh;
   position: relative;
-  /*.cards-images {
-    max-height: calc((100% - $gap-4) * 0.5);
-    gap: $gap-4;
-    @include mediaQuery($medScreen_min_width) {
-      & {
-        max-height: calc((100% - $gap-3) * 0.5);
-        gap: $gap-3;
-      }
-    }
-    .card-image {
-      flex: 1 0;
-      position: relative;
-      visibility: hidden;
-      &.show {
-        animation-name: showImages;
-        animation-duration: 0.4s;
-        animation-timing-function: ease;
-        animation-iteration-count: 1;
-      }
-      .img-wrapper {
-        width: 100%;
-        position: relative;
-      }
-      .text-wrapper {
-        min-width: 40%;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        transform: translateX(-30%);
-        .text {
-          color: $white-1;
-          border: 0.3125rem solid transparent;
-          background-color: $orange-5;
-          @extend %text;
-          visibility: hidden;
-          &.animate {
-            animation-name: showCards;
-            animation-duration: 0.5s;
-            animation-iteration-count: 1;
-          }
-        }
-      }
-    }
-  }*/
 }
 @media (min-width: 768px) {
   .game .body .body-wrapper .cards {
-    max-height: calc((100% - 2rem) * 0.6);
-    gap: 1.5rem;
+    height: calc((100% - 1rem) * 0.7);
+    gap: 1rem;
+  }
+}
+@media (min-width: 992px) {
+  .game .body .body-wrapper .cards {
+    width: 85%;
+  }
+}
+@media (min-width: 1400px) {
+  .game .body .body-wrapper .cards {
+    width: 60%;
   }
 }
 .game .body .body-wrapper .cards .cards-wrapper {
-  padding: 1.5rem;
-  gap: 5vh;
+  min-height: 90%;
+  max-height: 100%;
+  width: calc((100% - 2vh) * 0.5);
+  padding: 3vh;
+  gap: 3vh;
   border-radius: 1rem;
   background-color: #fff;
+  transform: translateY(100vh);
+  visibility: hidden;
 }
 @media (min-width: 768px) {
   .game .body .body-wrapper .cards .cards-wrapper {
-    gap: 2.5rem;
+    width: calc((100% - 1rem) * 0.5);
+    padding: 1.5rem;
+    gap: 1.5rem;
   }
+}
+.game .body .body-wrapper .cards .cards-wrapper.show {
+  animation-name: showWrapper;
+  animation-duration: 0.4s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
 }
 .game .body .body-wrapper .cards .cards-wrapper .title {
   gap: 0.75rem;
   align-self: flex-start;
 }
 .game .body .body-wrapper .cards .cards-wrapper .title .img-wrapper {
-  width: 16%;
+  width: 6vh;
   aspect-ratio: 1;
+  padding: 1vh 1vh 0 1vh;
   border-radius: 50%;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .game .body .body-wrapper .cards .cards-wrapper .title .img-wrapper {
+    width: 16%;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+  }
 }
 .game .body .body-wrapper .cards .cards-wrapper .title .person-name {
   font-size: 2vh;
@@ -547,7 +525,23 @@ a {
   }
 }
 .game .body .body-wrapper .cards .cards-wrapper .cards-container {
-  gap: 1.5rem;
+  gap: 2vh;
+  flex-grow: 1;
+}
+@media (min-width: 768px) {
+  .game .body .body-wrapper .cards .cards-wrapper .cards-container {
+    gap: 1rem;
+  }
+}
+.game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item {
+  flex: 0 1;
+  visibility: hidden;
+}
+.game .body .body-wrapper .cards .cards-wrapper .cards-container .card-item.show {
+  animation-name: showCards;
+  animation-duration: 0.4s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
 }
 .game .body .body-wrapper .cards .cards-wrapper:nth-of-type(1) {
   align-self: flex-start;
@@ -565,42 +559,55 @@ a {
   background-color: rgba(255, 212, 233, 0.9);
 }
 .game .body .body-wrapper .match-cards {
-  width: 50%;
-  max-height: calc((100% - 4vh) * 0.4);
-  gap: 3vh;
+  width: 100%;
+  height: calc((100% - 2vh) * 0.3);
+  gap: 2vh;
 }
 @media (min-width: 768px) {
   .game .body .body-wrapper .match-cards {
-    max-height: calc((100% - 2rem) * 0.4);
-    gap: 1.5rem;
+    height: calc((100% - 1rem) * 0.3);
+    gap: 1rem;
   }
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper {
-  gap: 1rem;
+@media (min-width: 992px) {
+  .game .body .body-wrapper .match-cards {
+    width: 85%;
+  }
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper {
-  flex: 1;
+@media (min-width: 1400px) {
+  .game .body .body-wrapper .match-cards {
+    width: 60%;
+  }
+}
+.game .body .body-wrapper .match-cards .match-card-wrapper {
+  width: calc((100% - 4vh) / 3);
   align-self: stretch;
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card {
+@media (min-width: 768px) {
+  .game .body .body-wrapper .match-cards .match-card-wrapper {
+    width: calc((100% - 1rem) * 0.5);
+  }
+}
+.game .body .body-wrapper .match-cards .match-card-wrapper .match-card {
   height: 100%;
   background-color: #fff;
   display: inline-block;
   box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+  visibility: hidden;
   cursor: pointer;
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card.show {
+.game .body .body-wrapper .match-cards .match-card-wrapper .match-card.show {
   animation-name: showCards;
   animation-duration: 0.4s;
   animation-timing-function: ease;
   animation-iteration-count: 1;
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card.vibrate {
+.game .body .body-wrapper .match-cards .match-card-wrapper .match-card.vibrate {
   animation-name: vibrate;
   animation-duration: 0.5s;
   animation-iteration-count: 1;
 }
-.game .body .body-wrapper .match-cards .match-cards-wrapper .match-card-wrapper .match-card .text::first-letter {
+.game .body .body-wrapper .match-cards .match-card-wrapper .match-card .text::first-letter {
   text-transform: capitalize;
 }
 
@@ -801,26 +808,15 @@ a {
     transform: translate(-50%, -50%) scale(0);
   }
 }
-@keyframes showCards {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 @keyframes vibrate {
   0% {
-    transform: rotate(-10deg);
+    transform: rotate(-4deg);
   }
   25% {
     transform: rotate(0);
   }
   50% {
-    transform: rotate(10deg);
+    transform: rotate(4deg);
   }
   100% {
     transform: rotate(0);
@@ -848,20 +844,19 @@ a {
     transform: translate(-50%, -50%) scale(0);
   }
 }
-@keyframes showImages {
+@keyframes showWrapper {
   0% {
-    transform: scale(0);
+    opacity: 0;
+    transform: translateY(100vh);
   }
   100% {
-    transform: scale(1);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 @keyframes showCards {
   0% {
     transform: scale(0);
-  }
-  50% {
-    transform: scale(1.1);
   }
   100% {
     transform: scale(1);

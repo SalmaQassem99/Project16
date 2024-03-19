@@ -6,17 +6,11 @@
 $padding: 1.5rem;
 $gap-1: 2rem;
 $gap-2: 4vh;
-$gap-3: 1.5rem;
-$gap-4: 3vh;
-$width: 50%;
-%width {
-  width: calc((100% - $gap-4) * 0.5);
-  @include mediaQuery($medScreen_min_width) {
-    & {
-      width: calc((100% - $gap-3) * 0.5);
-    }
-  }
-}
+$gap-5: 1rem;
+$gap-6: 2vh;
+$width: 60%;
+$width-1: 100%;
+$width-2: 85%;
 %fixed-position {
   position: fixed;
   top: 50%;
@@ -159,7 +153,6 @@ $width: 50%;
   position: relative;
   overflow-y: auto;
   visibility: hidden;
-  background-image: url("../media/images/background.svg");
   background-size: cover;
   background-position: 50% 100%;
   &.hide {
@@ -405,41 +398,72 @@ $width: 50%;
       }
     }
     .body-wrapper {
-      gap: $gap-2;
+      gap: $gap-6;
+      overflow: hidden;
       @include mediaQuery($medScreen_min_width) {
         & {
-          gap: $gap-1;
+          gap: $gap-5;
         }
       }
       .cards {
-        width: $width;
-        max-height: calc((100% - $gap-2) * 0.6);
-        gap: $gap-4;
+        width: $width-1;
+        min-height: calc((100% - $gap-6) * 0.7);
+        gap: $gap-6;
         position: relative;
         @include mediaQuery($medScreen_min_width) {
           & {
-            max-height: calc((100% - $gap-1) * 0.6);
-            gap: $gap-3;
+            height: calc((100% - $gap-5) * 0.7);
+            gap: $gap-5;
+          }
+        }
+        @include mediaQuery($largeScreen_min_width) {
+          & {
+            width: $width-2;
+          }
+        }
+        @include mediaQuery($XXlargeScreen_min_width) {
+          & {
+            width: $width;
           }
         }
         .cards-wrapper {
-          @extend %width;
-          padding: 1.5rem;
-          gap: 5vh;
+          min-height: 90%;
+          max-height: 100%;
+          width: calc((100% - $gap-6) * 0.5);
+          padding: 3vh;
+          gap: 3vh;
           border-radius: 1rem;
           background-color: $white-1;
+          transform: translateY(100vh);
+          visibility: hidden;
           @include mediaQuery($medScreen_min_width) {
             & {
-              gap: 2.5rem;
+              width: calc((100% - $gap-5) * 0.5);
+              padding: 1.5rem;
+              gap: 1.5rem;
             }
+          }
+          &.show {
+            animation-name: showWrapper;
+            animation-duration: 0.4s;
+            animation-timing-function: ease;
+            animation-iteration-count: 1;
           }
           .title {
             gap: 0.75rem;
             align-self: flex-start;
             .img-wrapper {
-              width: 16%;
+              width: 6vh;
               aspect-ratio: 1;
+              padding: 1vh 1vh 0 1vh;
               border-radius: 50%;
+              overflow: hidden;
+              @include mediaQuery($medScreen_min_width) {
+                & {
+                  width: 16%;
+                  padding: 0.5rem 0.5rem 0 0.5rem;
+                }
+              }
             }
             .person-name {
               font-size: 2vh;
@@ -453,10 +477,23 @@ $width: 50%;
             }
           }
           .cards-container {
-            gap: $gap-3;
+            gap: $gap-6;
+            flex-grow: 1;
+            @include mediaQuery($medScreen_min_width) {
+              & {
+                gap: $gap-5;
+              }
+            }
             .card-item {
-              //width: 90%;
+              flex: 0 1;
               @extend %text;
+              visibility: hidden;
+              &.show {
+                animation-name: showCards;
+                animation-duration: 0.4s;
+                animation-timing-function: ease;
+                animation-iteration-count: 1;
+              }
             }
           }
           &:nth-of-type(1) {
@@ -485,92 +522,58 @@ $width: 50%;
             }
           }
         }
-        /*.cards-images {
-          max-height: calc((100% - $gap-4) * 0.5);
-          gap: $gap-4;
+      }
+      .match-cards {
+        width: $width-1;
+        height: calc((100% - $gap-6) * 0.3);
+        gap: $gap-6;
+        @include mediaQuery($medScreen_min_width) {
+          & {
+            height: calc((100% - $gap-5) * 0.3);
+            gap: $gap-5;
+          }
+        }
+        @include mediaQuery($largeScreen_min_width) {
+          & {
+            width: $width-2;
+          }
+        }
+        @include mediaQuery($XXlargeScreen_min_width) {
+          & {
+            width: $width;
+          }
+        }
+        .match-card-wrapper {
+          width: calc((100% - (2 * $gap-6)) / 3);
+          align-self: stretch;
           @include mediaQuery($medScreen_min_width) {
             & {
-              max-height: calc((100% - $gap-3) * 0.5);
-              gap: $gap-3;
+              width: calc((100% - $gap-5) * 0.5);
             }
           }
-          .card-image {
-            flex: 1 0;
-            position: relative;
+          .match-card {
+            height: 100%;
+            background-color: $white-1;
+            @extend %text;
+            display: inline-block;
+            box-shadow: 0 0.25rem 0.25rem $shadow-1;
             visibility: hidden;
+            cursor: pointer;
+
             &.show {
-              animation-name: showImages;
+              animation-name: showCards;
               animation-duration: 0.4s;
               animation-timing-function: ease;
               animation-iteration-count: 1;
             }
-            .img-wrapper {
-              width: 100%;
-              position: relative;
+            &.vibrate {
+              animation-name: vibrate;
+              animation-duration: 0.5s;
+              animation-iteration-count: 1;
             }
-            .text-wrapper {
-              min-width: 40%;
-              position: absolute;
-              right: 0;
-              bottom: 0;
-              transform: translateX(-30%);
-              .text {
-                color: $white-1;
-                border: 0.3125rem solid transparent;
-                background-color: $orange-5;
-                @extend %text;
-                visibility: hidden;
-                &.animate {
-                  animation-name: showCards;
-                  animation-duration: 0.5s;
-                  animation-iteration-count: 1;
-                }
-              }
-            }
-          }
-        }*/
-      }
-      .match-cards {
-        width: $width;
-        max-height: calc((100% - $gap-2) * 0.4);
-        gap: $gap-4;
-        @include mediaQuery($medScreen_min_width) {
-          & {
-            max-height: calc((100% - $gap-1) * 0.4);
-            gap: $gap-3;
-          }
-        }
-        .match-cards-wrapper {
-          @extend %width;
-          gap: 1rem;
-          .match-card-wrapper {
-            flex: 1;
-            align-self: stretch;
-            .match-card {
-              height: 100%;
-              background-color: $white-1;
-              @extend %text;
-              display: inline-block;
-              box-shadow: 0 0.25rem 0.25rem $shadow-1;
-              //visibility: hidden;
-              cursor: pointer;
-              //text-transform: capitalize;
-
-              &.show {
-                animation-name: showCards;
-                animation-duration: 0.4s;
-                animation-timing-function: ease;
-                animation-iteration-count: 1;
-              }
-              &.vibrate {
-                animation-name: vibrate;
-                animation-duration: 0.5s;
-                animation-iteration-count: 1;
-              }
-              .text {
-                &::first-letter {
-                  text-transform: capitalize;
-                }
+            .text {
+              &::first-letter {
+                text-transform: capitalize;
               }
             }
           }
@@ -814,21 +817,9 @@ $width: 50%;
   }
 }
 
-@keyframes showCards {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes vibrate {
   0% {
-    transform: rotate(-10deg);
+    transform: rotate(-4deg);
   }
 
   25% {
@@ -836,7 +827,7 @@ $width: 50%;
   }
 
   50% {
-    transform: rotate(10deg);
+    transform: rotate(4deg);
   }
 
   100% {
@@ -872,21 +863,20 @@ $width: 50%;
   }
 }
 
-@keyframes showImages {
+@keyframes showWrapper {
   0% {
-    transform: scale(0);
+    opacity: 0;
+    transform: translateY(100vh);
   }
   100% {
-    transform: scale(1);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes showCards {
   0% {
     transform: scale(0);
-  }
-  50% {
-    transform: scale(1.1);
   }
   100% {
     transform: scale(1);

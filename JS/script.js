@@ -7,12 +7,12 @@ const body = document.querySelector(".body");
 const infoIcon = document.querySelector(".info.icon");
 const scoreWrapper = document.querySelector(".game .scoreWrapper");
 const score = document.querySelector(".game .scoreItem .score");
-const cardItems = document.querySelectorAll(".cards .cards-images .card-image");
 const textItems = document.querySelectorAll(
   ".match-cards .match-card-wrapper .match-card"
 );
-const cardImages = document.querySelectorAll(
-  ".cards .cards-images .card-image .img-wrapper .img-container .card-img"
+const cardsWrapper = document.querySelectorAll(".cards .cards-wrapper");
+const cardsContainer = document.querySelectorAll(
+  ".cards .cards-wrapper .cards-container"
 );
 const successModal = document.querySelector(".success-wrapper");
 const closeButton = document.querySelector(".closeModal");
@@ -37,12 +37,14 @@ infoIcon.addEventListener("click", () => {
   animateInfo();
 });
 const animateNext = (i) => {
-  cardItems[i].style.visibility = "visible";
-  cardItems[i].classList.add("show");
-  cardItems[i].addEventListener("animationend", () => {
-    if (cardItems[i].classList.contains("show")) {
-      cardItems[i].classList.remove("show");
-      if (animationCounter === cardItems.length - 1) {
+  cardsWrapper[i].style.visibility = "visible";
+  cardsWrapper[i].classList.add("show");
+  cardsWrapper[i].addEventListener("animationend", () => {
+    if (cardsWrapper[i].classList.contains("show")) {
+      cardsWrapper[i].classList.remove("show");
+      cardsWrapper[i].style.transform = "translateY(0)";
+      if (animationCounter === cardsWrapper.length - 1) {
+        document.querySelector(".body-wrapper").style.overflow = "initial";
         //animate text
         textItems.forEach((item) => {
           item.style.visibility = "visible";
@@ -67,15 +69,16 @@ playButton.addEventListener("click", () => {
     cardWrapper.classList.remove("hide");
     cardWrapper.style.visibility = "hidden";
     scoreWrapper.style.visibility = "visible";
-    score.textContent = `0/${cardItems.length}`;
+    score.textContent = `0/${textItems.length}`;
     body.classList.add("show");
-    //animateNext(animationCounter);
+    animateNext(animationCounter);
   });
 });
 textItems.forEach((textItem) => {
   textItem.addEventListener("dragstart", (event) => {
     event.stopPropagation();
     event.dataTransfer.setData("id", textItem.dataset.index);
+    event.dataTransfer.setData("indx", textItem.dataset.indx);
     document.querySelector(`audio[id="${textItem.dataset.index}"]`).play();
   });
   textItem.addEventListener("drag", (event) => {
@@ -85,7 +88,7 @@ textItems.forEach((textItem) => {
     textItem.style.opacity = "1";
   });
 });
-cardImages.forEach((cardItem) => {
+cardsContainer.forEach((cardItem) => {
   cardItem.addEventListener("dragover", (event) => {
     event.preventDefault();
   });
@@ -93,8 +96,9 @@ cardImages.forEach((cardItem) => {
     event.preventDefault();
     const index = cardItem.dataset.index;
     const textId = event.dataTransfer.getData("id");
+    const textIndex = event.dataTransfer.getData("indx");
     const text = document.querySelector(
-      `.match-cards .match-card-wrapper .match-card[data-index="${textId}"]`
+      `.match-cards .match-card-wrapper .match-card[data-indx="${textIndex}"]`
     );
     if (index === textId) {
       document.querySelector("#correct-audio").play();
@@ -106,20 +110,25 @@ cardImages.forEach((cardItem) => {
       document
         .querySelector(":root")
         .style.setProperty("--width", `${(100 / textItems.length) * counter}%`);
-      let textItem = document.querySelector(
-        `.cards .cards-images .card-image .text-wrapper .text[data-index="${textId}"]`
+      const newItem = document.createElement("div");
+      newItem.classList.add(
+        "card-item",
+        "d-flex",
+        "align-items-center",
+        "justify-content-center"
       );
-      textItem.textContent = textContent;
-      textItem.style.visibility = "visible";
-      textItem.classList.add("animate");
-      textItem.addEventListener("animationend", () => {
-        textItem.classList.remove("animate");
+      newItem.textContent = textContent;
+      cardItem.appendChild(newItem);
+      newItem.style.visibility = "visible";
+      newItem.classList.add("show");
+      newItem.addEventListener("animationend", () => {
+        newItem.classList.remove("show");
       });
       text.style.visibility = "hidden";
-      if (counter === cardImages.length) {
+      if (counter === textItems.length) {
         const text = document.querySelector(".text-card .score-text");
-        text.textContent = `${counter}/${cardImages.length}`;
-        text.setAttribute("text", `${counter}/${cardImages.length}`);
+        text.textContent = `${counter}/${textItems.length}`;
+        text.setAttribute("text", `${counter}/${textItems.length}`);
         successModal.style.visibility = "visible";
         successModal.classList.add("show");
         overlay.classList.add("show");
