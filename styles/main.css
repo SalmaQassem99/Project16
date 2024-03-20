@@ -515,13 +515,13 @@ a {
   }
 }
 .game .body .body-wrapper .cards .cards-wrapper .title .person-name {
-  font-size: 2vh;
+  font-size: 3vh;
   font-family: MochiyPopPOne-Regular;
   text-transform: capitalize;
 }
 @media (min-width: 768px) {
   .game .body .body-wrapper .cards .cards-wrapper .title .person-name {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }
 .game .body .body-wrapper .cards .cards-wrapper .cards-container {

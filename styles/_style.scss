@@ -466,12 +466,12 @@ $width-2: 85%;
               }
             }
             .person-name {
-              font-size: 2vh;
+              font-size: 3vh;
               font-family: MochiyPopPOne-Regular;
               text-transform: capitalize;
               @include mediaQuery($medScreen_min_width) {
                 & {
-                  font-size: 1rem;
+                  font-size: 1.5rem;
                 }
               }
             }
