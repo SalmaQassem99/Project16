@@ -338,7 +338,7 @@ a {
   fill: #ace5fe;
 }
 .game .cardContainer .card-wrapper .card .title .first-line {
-  gap: 15%;
+  gap: 8%;
   line-height: 0.5;
 }
 .game .cardContainer .card-wrapper .card .title .first-line .word-item {
