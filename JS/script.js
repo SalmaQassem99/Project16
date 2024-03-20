@@ -115,12 +115,7 @@ cardsContainer.forEach((cardItem) => {
         .querySelector(":root")
         .style.setProperty("--width", `${(100 / textItems.length) * counter}%`);
       const newItem = document.createElement("div");
-      newItem.classList.add(
-        "card-item",
-        "d-flex",
-        "align-items-center",
-        "justify-content-center"
-      );
+      newItem.classList.add("card-item");
       newItem.textContent = textContent;
       cardItem.appendChild(newItem);
       newItem.style.visibility = "visible";
