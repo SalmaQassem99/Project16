@@ -71,6 +71,10 @@ playButton.addEventListener("click", () => {
     scoreWrapper.style.visibility = "visible";
     score.textContent = `0/${textItems.length}`;
     body.classList.add("show");
+    arrows.forEach((arrow) => {
+      arrow.style.visibility = "visible";
+    });
+    pauseButton.style.visibility = "visible";
     animateNext(animationCounter);
   });
 });
